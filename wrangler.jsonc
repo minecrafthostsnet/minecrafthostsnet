@@ -3,8 +3,7 @@
   "name": "minecrafthostsnet",
   "compatibility_date": "2026-06-02",
   "assets": {
-    "directory": "./public",
-    "not_found_handling": "single-page-application"
+    "directory": "./public"
   },
   "observability": {
     "enabled": true

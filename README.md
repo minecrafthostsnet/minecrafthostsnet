@@ -1,30 +1,50 @@
 # MinecraftHosts.net
 
-Static Minecraft server hosting comparison site deployed with Cloudflare Workers static assets.
+Fully fixed Cloudflare Workers static asset deployment.
 
-## Cloudflare deploy settings
+## Folder structure
+
+```text
+wrangler.jsonc
+package.json
+.gitignore
+public/
+  index.html
+  robots.txt
+  sitemap.xml
+  404.html
+  assets/
+  reviews/
+  compare/
+  guides/
+```
+
+## Cloudflare settings
 
 Use:
 
 ```text
 Build command: npm install
 Deploy command: npx wrangler deploy
-```
-
-Wrangler serves files from:
-
-```text
-public/
+Root directory: /
 ```
 
 ## Important
 
-Do not add a `www` redirect inside `_redirects` for Workers static assets. Cloudflare Workers only accepts relative redirect paths there.
+There is no `_redirects` file in this package.
 
-Create the `www.minecrafthosts.net` redirect in Cloudflare:
+For `www.minecrafthosts.net`, create the redirect inside Cloudflare Dashboard:
 
 ```text
-Rules → Redirect Rules → Create Rule
+Rules → Redirect Rules
 Hostname equals www.minecrafthosts.net
-301 redirect to https://minecrafthosts.net/$1
+301 redirect to https://minecrafthosts.net
+```
+
+## Deploy locally
+
+```bash
+git add -A
+git commit -m "Fix Cloudflare deployment"
+git push origin main
 ```

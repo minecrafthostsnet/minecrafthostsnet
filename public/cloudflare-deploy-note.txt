@@ -1,0 +1,1 @@
+This static site deploys from the public folder. Do not add _redirects for www redirects.
