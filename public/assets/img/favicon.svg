@@ -1,11 +1,10 @@
-{
-  "name": "minecrafthostsnet",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "deploy": "wrangler deploy"
-  },
-  "devDependencies": {
-    "wrangler": "^4.96.0"
-  }
-}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title>MinecraftHosts.net favicon</title>
+  <rect width="64" height="64" rx="14" fill="#0f172a"/>
+  <rect x="12" y="14" width="44" height="36" rx="6" fill="#1f7a3f"/>
+  <rect x="12" y="14" width="44" height="14" rx="6" fill="#33a852"/>
+  <rect x="18" y="33" width="8" height="8" fill="#0f172a"/>
+  <rect x="38" y="33" width="8" height="8" fill="#0f172a"/>
+  <path d="M24 47h20v-7h-6v-5h-4v5h-4v-5h-4v5h-2z" fill="#0f172a"/>
+  <path d="M20 20h6v4h-6zM30 20h10v4H30zM44 20h4v4h-4z" fill="#6bd67f"/>
+</svg>

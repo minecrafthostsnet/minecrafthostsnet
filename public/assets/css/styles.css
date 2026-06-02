@@ -207,17 +207,6 @@ tr:last-child td { border-bottom: none; }
   align-items: center;
 }
 .review-hero .host-logo { width: 90px; height: 90px; margin: 0; }
-.score {
-  display: inline-grid;
-  place-items: center;
-  min-width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: var(--accent);
-  color: #071108;
-  font-weight: 900;
-  font-size: 1.25rem;
-}
 footer {
   padding: 2rem 1.25rem;
   border-top: 1px solid var(--border);

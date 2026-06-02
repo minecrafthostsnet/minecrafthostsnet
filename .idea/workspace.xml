@@ -4,46 +4,82 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="eebcd243-a98a-4885-86e9-5cd8c50c0621" name="Changes" comment="" />
+    <list default="true" id="eebcd243-a98a-4885-86e9-5cd8c50c0621" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/css/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/img/favicon.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/img/favicon.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/assets/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/assets/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/compare/apex-vs-shockbyte.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/compare/apex-vs-shockbyte.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/compare/pebblehost-vs-bisecthosting.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/compare/pebblehost-vs-bisecthosting.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/guides/best-minecraft-hosting-australia.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/guides/best-minecraft-hosting-australia.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/guides/best-minecraft-hosting-for-modpacks.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/guides/best-minecraft-hosting-for-modpacks.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/reviews/apex-hosting.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/reviews/apex-hosting.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/reviews/bisecthosting.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/reviews/bisecthosting.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/reviews/hostinger.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/reviews/hostinger.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/reviews/nodecraft.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/reviews/nodecraft.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/reviews/pebblehost.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/reviews/pebblehost.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/reviews/scalacube.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/reviews/scalacube.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/reviews/shockbyte.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/reviews/shockbyte.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="27" />
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "apotheoticstudios"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;apotheoticstudios&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/minecrafthostsnet/minecrafthostsnet.git",
-    "accountId": "e6c448ff-1cbc-4ee1-bfd7-5ec2d9e53a8b"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/minecrafthostsnet/minecrafthostsnet.git&quot;,
+    &quot;accountId&quot;: &quot;e6c448ff-1cbc-4ee1-bfd7-5ec2d9e53a8b&quot;
   }
-}]]></component>
+}</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="3EZjDzIuoxYcartzfUTlbrMaiCY" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main"
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "to.speed.mode.migration.done": "true"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="website" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="website" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>

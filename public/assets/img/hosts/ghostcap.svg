@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#6366f1"/>
+  <path d="M32 11c12 0 20 9 20 21v21l-8-5-8 5-8-5-8 5-8-5V32c0-12 8-21 20-21z" fill="#312e81"/>
+  <text x="32" y="39" fill="#fff" font-family="Arial, sans-serif" font-size="18" font-weight="700" text-anchor="middle">GC</text>
+</svg>
