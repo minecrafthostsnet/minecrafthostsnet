@@ -1,30 +1,30 @@
 # MinecraftHosts.net
 
-Static Minecraft server hosting comparison website.
+A cleaner static Minecraft server hosting comparison website.
 
-## Files
+## Includes
 
-- `index.html` — main website
-- `robots.txt` — search engine crawl rules
-- `sitemap.xml` — sitemap for Google Search Console
-- `404.html` — fallback error page
+- Redesigned homepage
+- Reliable provider favicon assets with local SVG fallbacks
+- Focused review pages
+- Head-to-head comparison pages
+- Modpack and Australia guides
+- Search/filter/sort comparison table
+- SEO metadata, sitemap, robots.txt, Open Graph image
+- Cloudflare Workers static assets config
 
-## Cloudflare Pages settings
+## Deploy
 
-Use these settings:
+Cloudflare settings:
 
 ```text
-Framework preset: None
-Build command: leave blank
-Build output directory: /
+Build command: npm install
+Deploy command: npx wrangler deploy
+Root directory: /
 ```
 
-## Deploy locally to GitHub
+The site deploys from `public/`.
 
-Copy these files into your cloned repo, then run:
+## Trademark note
 
-```bash
-git add .
-git commit -m "Add Minecraft hosting comparison website"
-git push origin main
-```
+Company names, logos, icons, trademarks, and brands belong to their respective owners. Provider favicons and public brand assets are used for identification and comparison only.
