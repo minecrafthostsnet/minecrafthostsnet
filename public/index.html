@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Best Minecraft Server Hosting Comparison 2026 | MinecraftHosts.net</title>
-  <meta name="description" content="Compare Minecraft server hosting prices from PebbleHost, Sparked Host, Shockbyte, BisectHosting, GGServers, Apex Hosting, Nodecraft, Hostinger and more.">
+  <meta name="description" content="Compare 16 Minecraft server hosting providers by price per GB, monthly cost, category ranking, billing notes, and official source links.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://minecrafthosts.net/">
   <link rel="icon" href="./assets/img/favicon.svg" type="image/svg+xml">
   <meta property="og:title" content="Best Minecraft Server Hosting Comparison 2026 | MinecraftHosts.net">
-  <meta property="og:description" content="Compare Minecraft server hosting prices from PebbleHost, Sparked Host, Shockbyte, BisectHosting, GGServers, Apex Hosting, Nodecraft, Hostinger and more.">
+  <meta property="og:description" content="Compare 16 Minecraft server hosting providers by price per GB, monthly cost, category ranking, billing notes, and official source links.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://minecrafthosts.net/">
   <meta property="og:image" content="https://minecrafthosts.net/assets/img/social-card.svg">
@@ -23,7 +23,8 @@
       "@type": "WebSite",
       "name": "MinecraftHosts.net",
       "url": "https://minecrafthosts.net",
-      "description": "Compare Minecraft server hosting prices, plans and features."
+      "description": "Compare Minecraft server hosting prices, plans and features.",
+      "dateModified": "2026-06-03"
     },
     {
       "@context": "https://schema.org",
@@ -147,9 +148,9 @@
 </nav>
 
 <header class="hero">
-  <span class="badge">Minecraft Server Host Price Guide</span>
+  <span class="badge">16-host Minecraft server price guide</span>
   <h1>Compare Minecraft server hosts without digging through every pricing page.</h1>
-  <p>Use this guide to compare budget, modded, vanilla, Australian, and public community server hosting. Prices change often, so check the host’s checkout page before buying.</p>
+  <p>Filter by host type, price unit, and low/mid/high monthly cost, then use category-specific rankings to shortlist the hosts that fit your server.</p>
   <div class="hero-actions">
     <a href="#comparison" class="button">View Price Table</a>
     <a href="./guides/best-minecraft-hosting-for-modpacks.html" class="button secondary">Modpack Hosting</a>
@@ -161,9 +162,9 @@
     <h2>Editorial quick picks</h2>
     <p class="lead">These are suggested use cases, not provider statistics. Pick based on your server type first: the lowest advertised charge is not always the best choice for large Forge or Fabric modpacks.</p>
     <div class="grid">
-      <article class="card"><h3>Low-cost per-GB option</h3><p class="price">PebbleHost</p><p class="small">Suggested for low-cost private servers.</p></article>
+      <article class="card"><h3>Low-cost per-GB option</h3><p class="price">PebbleHost</p><p class="small">Best starting point when price per GB matters most.</p></article>
       <article class="card"><h3>Easy beginner option</h3><p class="price">Shockbyte</p><p class="small">Simple plans and a familiar Minecraft hosting setup.</p></article>
-      <article class="card"><h3>Modpack-friendly</h3><p class="price">BisectHosting</p><p class="small">Strong middle-ground choice for modded servers.</p></article>
+      <article class="card"><h3>Modpack-friendly</h3><p class="price">BisectHosting</p><p class="small">A stronger fit when Forge, Fabric, and modpack support matter.</p></article>
       <article class="card"><h3>Premium control panel</h3><p class="price">Nodecraft</p><p class="small">Good if you host different games or want polished tools.</p></article>
     </div>
   </section>
@@ -225,37 +226,54 @@
 
   <section id="comparison">
     <h2>Sortable price comparison table</h2>
-    <p class="lead">Search, filter, and sort hosts by advertised USD pricing or editorial category. Low is under $4, mid is $4-$6.99, and high is $7+. Range filtering uses the ongoing or standard monthly amount where the provider publishes one, while first-month promos and custom starting charges are shown separately.</p>
-    <div class="toolbar">
-      <input id="hostSearch" type="search" placeholder="Search host, price, feature...">
-      <select id="typeFilter">
-        <option value="all">All host types</option>
-        <option value="Budget">Budget</option>
-        <option value="Beginner">Beginner</option>
-        <option value="Modded">Modded</option>
-        <option value="Premium">Premium</option>
-        <option value="Performance">Performance</option>
-        <option value="Multi-game">Multi-game</option>
-        <option value="VPS">VPS</option>
-      </select>
-      <select id="priceUnitFilter">
-        <option value="all">All pricing units</option>
-        <option value="gb">Price per GB</option>
-        <option value="month">Price per month</option>
-      </select>
-      <select id="priceRangeFilter">
-        <option value="all">All price ranges</option>
-        <option value="low">Low: under $4</option>
-        <option value="mid">Mid: $4-$6.99</option>
-        <option value="high">High: $7+</option>
-      </select>
-      <select id="sortHosts">
-        <option value="rank">Sort by editorial recommendation</option>
-        <option value="price">Sort by starting amount</option>
-      </select>
+    <p class="lead">Search, filter, and sort hosts by advertised USD pricing or editorial category. Low is under $4, mid is $4-$6.99, and high is $7+. Filters use the ongoing or standard monthly amount where the provider publishes one, while first-month promos and custom starting charges stay visible in the price column.</p>
+    <div class="toolbar" aria-label="Comparison filters">
+      <label>
+        <span>Search</span>
+        <input id="hostSearch" type="search" placeholder="Host, price, feature..." autocomplete="off">
+      </label>
+      <label>
+        <span>Host type</span>
+        <select id="typeFilter">
+          <option value="all">All host types</option>
+          <option value="Budget">Budget</option>
+          <option value="Beginner">Beginner</option>
+          <option value="Modded">Modded</option>
+          <option value="Premium">Premium</option>
+          <option value="Performance">Performance</option>
+          <option value="Multi-game">Multi-game</option>
+          <option value="VPS">VPS</option>
+        </select>
+      </label>
+      <label>
+        <span>Pricing unit</span>
+        <select id="priceUnitFilter">
+          <option value="all">All pricing units</option>
+          <option value="gb">Price per GB</option>
+          <option value="month">Price per month</option>
+        </select>
+      </label>
+      <label>
+        <span>Monthly range</span>
+        <select id="priceRangeFilter">
+          <option value="all">All price ranges</option>
+          <option value="low">Low: under $4</option>
+          <option value="mid">Mid: $4-$6.99</option>
+          <option value="high">High: $7+</option>
+        </select>
+      </label>
+      <label>
+        <span>Sort</span>
+        <select id="sortHosts">
+          <option value="rank">Editorial recommendation</option>
+          <option value="price">Standard monthly amount</option>
+        </select>
+      </label>
+      <button id="resetFilters" class="button secondary button-compact" type="button">Reset filters</button>
     </div>
     <p id="filterStatus" class="small" role="status" aria-live="polite"></p>
     <table>
+      <caption>Comparison of Minecraft server hosting prices, billing context, category, and official source links.</caption>
       <thead><tr><th>Host</th><th>Advertised starting price</th><th>Billing context</th><th>Suggested use</th><th>Editorial category</th><th>Official source</th><th>More</th></tr></thead>
       <tbody>
           <tr data-host-row data-rank="1" data-category-rank="1" data-price="1.0" data-range-price="1.0" data-price-unit="gb" data-type="Budget">
@@ -416,6 +434,12 @@
             <td data-label="Editorial category">Multi-game</td>
             <td data-label="Official source"><a href="https://server.pro/" target="_blank" rel="noopener noreferrer">Server.pro</a></td>
             <td data-label="More"><a href="https://server.pro/" target="_blank" rel="nofollow sponsored noopener noreferrer">Official site</a></td>
+          </tr>
+          <tr id="noResultsRow" class="no-results" hidden>
+            <td colspan="7">
+              <strong>No hosts match those filters.</strong>
+              <span>Try clearing search, changing the price range, or resetting the filters.</span>
+            </td>
           </tr>
       </tbody>
     </table>
