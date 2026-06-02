@@ -1,37 +1,30 @@
 # MinecraftHosts.net
 
-Static Minecraft server hosting comparison website.
+Static Minecraft server hosting comparison site deployed with Cloudflare Workers static assets.
 
-## What is included
+## Cloudflare deploy settings
 
-- Homepage with sortable/filterable host comparison table
-- Host review pages
-- Comparison pages
-- Modpack hosting guide
-- Australia hosting guide
-- `robots.txt`
-- `sitemap.xml`
-- `_headers`
-- `_redirects`
-- `404.html`
-- Favicon and social sharing image
-
-## Cloudflare Pages settings
+Use:
 
 ```text
-Framework preset: None
-Build command: leave blank
-Build output directory: /
+Build command: npm install
+Deploy command: npx wrangler deploy
 ```
 
-## Deploy
+Wrangler serves files from:
 
-```bash
-git add .
-git commit -m "Expand site with reviews, guides, SEO and comparison tools"
-git push origin main
+```text
+public/
 ```
 
-## Notes
+## Important
 
-Company names, logos, trademarks, and brands belong to their respective owners. MinecraftHosts.net is independent and is not officially affiliated with Mojang, Microsoft, or the hosting providers listed.
+Do not add a `www` redirect inside `_redirects` for Workers static assets. Cloudflare Workers only accepts relative redirect paths there.
+
+Create the `www.minecrafthosts.net` redirect in Cloudflare:
+
+```text
+Rules → Redirect Rules → Create Rule
+Hostname equals www.minecrafthosts.net
+301 redirect to https://minecrafthosts.net/$1
+```
