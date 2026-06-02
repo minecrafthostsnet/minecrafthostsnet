@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="./assets/css/styles.css" />
-  <link rel="icon" href="./assets/img/favicon.svg" />
-  <title>Document</title>
-</head>
-<body>
-  <nav>
-    <a href="./reviews/">Reviews</a>
-    <a href="./compare/">Compare</a>
-    <a href="./guides/">Guides</a>
-    <a href="#compare">Compare Section</a>
-  </nav>
-  <img src="./assets/img/hosts/example.png" data-fallback="./assets/img/hosts/fallback.png" alt="Host Example" />
-  <script src="./assets/js/main.js"></script>
-</body>
-</html>
+{
+  "name": "minecrafthostsnet",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.96.0"
+  }
+}

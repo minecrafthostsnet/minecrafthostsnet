@@ -1,7 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-<rect width="64" height="64" rx="12" fill="#162118"/>
-<rect x="10" y="12" width="44" height="40" rx="6" fill="#75d66f"/>
-<rect x="18" y="22" width="8" height="8" fill="#08100a"/>
-<rect x="38" y="22" width="8" height="8" fill="#08100a"/>
-<rect x="24" y="38" width="16" height="6" fill="#08100a"/>
-</svg>
+{
+  "name": "minecrafthostsnet",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.96.0"
+  }
+}
