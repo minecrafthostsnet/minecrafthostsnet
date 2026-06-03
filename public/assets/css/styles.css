@@ -229,7 +229,7 @@ li { margin: .4rem 0; overflow-wrap: anywhere; }
   flex-direction: column;
   gap: .4rem;
   height: 100%;
-  min-height: 210px;
+  min-height: 231px;
   padding: clamp(1.15rem, 2vw, 1.4rem);
   border-radius: 1.25rem;
   text-decoration: none;
