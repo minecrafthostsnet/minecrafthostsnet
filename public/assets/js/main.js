@@ -1,4 +1,5 @@
 const CURRENCY_KEY = "minecraftHostsCurrency";
+const CURRENCY_PARAM = "currency";
 const CURRENCY_RATES = {
   USD: 1,
   AUD: 1.39248,
@@ -30,22 +31,99 @@ const PRICE_RANGES = {
   }
 };
 
-function getSelectedCurrency() {
-  try {
-    const saved = window.localStorage.getItem(CURRENCY_KEY);
-    if (saved && CURRENCY_RATES[saved]) return saved;
-  } catch {
-    return "USD";
+function normalizeCurrency(currency) {
+  const normalized = String(currency || "").trim().toUpperCase();
+  return CURRENCY_RATES[normalized] ? normalized : null;
+}
+
+function readQueryParam(query, key) {
+  const source = String(query || "").replace(/^\?/, "");
+  if (!source) return null;
+  const pairs = source.split("&");
+  for (const pair of pairs) {
+    const [rawName, rawValue = ""] = pair.split("=");
+    try {
+      if (decodeURIComponent(rawName.replace(/\+/g, " ")) === key) {
+        return decodeURIComponent(rawValue.replace(/\+/g, " "));
+      }
+    } catch {
+      if (rawName === key) return rawValue;
+    }
   }
+  return null;
+}
+
+function setQueryParam(url, key, value) {
+  const [withoutHash, hash = ""] = String(url || "").split("#");
+  const [path, query = ""] = withoutHash.split("?");
+  const pairs = query ? query.split("&").filter(Boolean) : [];
+  const encodedKey = encodeURIComponent(key);
+  const encodedValue = encodeURIComponent(value);
+  let found = false;
+  const updatedPairs = pairs.map(pair => {
+    const [rawName] = pair.split("=");
+    let decodedName = rawName;
+    try {
+      decodedName = decodeURIComponent(rawName.replace(/\+/g, " "));
+    } catch {
+      // Keep the raw name if decoding fails.
+    }
+    if (decodedName !== key) return pair;
+    found = true;
+    return `${encodedKey}=${encodedValue}`;
+  });
+  if (!found) updatedPairs.push(`${encodedKey}=${encodedValue}`);
+  const queryString = updatedPairs.join("&");
+  return `${path}${queryString ? `?${queryString}` : ""}${hash ? `#${hash}` : ""}`;
+}
+
+function getCurrencyFromUrl() {
+  return normalizeCurrency(readQueryParam(window.location.search, CURRENCY_PARAM));
+}
+
+function getCurrencyFromCookie() {
+  const match = document.cookie.match(new RegExp(`(?:^|; )${CURRENCY_KEY}=([^;]*)`));
+  return match ? normalizeCurrency(decodeURIComponent(match[1])) : null;
+}
+
+function getStoredCurrency() {
+  try {
+    const saved = normalizeCurrency(window.localStorage.getItem(CURRENCY_KEY));
+    if (saved) return saved;
+  } catch {
+    // Ignore storage errors and try the next persistence option.
+  }
+  try {
+    const saved = normalizeCurrency(window.sessionStorage.getItem(CURRENCY_KEY));
+    if (saved) return saved;
+  } catch {
+    // Ignore storage errors and try the next persistence option.
+  }
+  return getCurrencyFromCookie();
+}
+
+function getSelectedCurrency() {
+  const fromUrl = getCurrencyFromUrl();
+  if (fromUrl) return fromUrl;
+  const saved = getStoredCurrency();
+  if (saved) return saved;
   return "USD";
 }
 
 function saveSelectedCurrency(currency) {
+  const normalized = normalizeCurrency(currency);
+  if (!normalized) return;
   try {
-    window.localStorage.setItem(CURRENCY_KEY, currency);
+    window.localStorage.setItem(CURRENCY_KEY, normalized);
   } catch {
-    // Local storage can be blocked; the selector still works for this page view.
+    // Local storage can be blocked; session/cookie fallbacks still keep the selection usable.
   }
+  try {
+    window.sessionStorage.setItem(CURRENCY_KEY, normalized);
+  } catch {
+    // Session storage can also be blocked.
+  }
+  document.cookie = `${CURRENCY_KEY}=${encodeURIComponent(normalized)}; path=/; max-age=31536000; SameSite=Lax`;
 }
 
 function formatCurrency(amountUsd, currency = currentCurrency) {
@@ -62,6 +140,30 @@ function formatCurrency(amountUsd, currency = currentCurrency) {
 function convertUsdText(text, currency = currentCurrency) {
   if (currency === "USD") return text;
   return text.replace(/\$(\d+(?:\.\d+)?)/g, (_, amount) => formatCurrency(Number(amount), currency));
+}
+
+function addCurrencyParamToHref(href, currency) {
+  if (!href || href.startsWith("#")) return href;
+  if (/^(?:https?:|mailto:|tel:|javascript:)/i.test(href)) return href;
+  return setQueryParam(href, CURRENCY_PARAM, currency);
+}
+
+function syncInternalCurrencyLinks(currency) {
+  document.querySelectorAll("a[href]").forEach(link => {
+    const href = link.getAttribute("href");
+    const updatedHref = addCurrencyParamToHref(href, currency);
+    if (updatedHref !== href) link.setAttribute("href", updatedHref);
+  });
+}
+
+function reloadWithCurrency(currency) {
+  saveSelectedCurrency(currency);
+  const nextHref = setQueryParam(window.location.href, CURRENCY_PARAM, currency);
+  if (nextHref !== window.location.href) {
+    window.location.assign(nextHref);
+    return;
+  }
+  window.location.reload();
 }
 
 function collectCurrencyTextNodes() {
@@ -115,7 +217,8 @@ function setupCurrencySelector() {
   const currencyTextNodes = collectCurrencyTextNodes();
 
   function applyCurrency(currency) {
-    currentCurrency = CURRENCY_RATES[currency] ? currency : "USD";
+    currentCurrency = normalizeCurrency(currency) || "USD";
+    saveSelectedCurrency(currentCurrency);
     currencyTextNodes.forEach(({ node, originalText }) => {
       node.nodeValue = convertUsdText(originalText, currentCurrency);
     });
@@ -124,16 +227,16 @@ function setupCurrencySelector() {
       selector.setAttribute("aria-label", `Display prices in ${CURRENCY_NAMES[currentCurrency]}`);
     });
     updatePriceRangeOptions(currentCurrency);
+    syncInternalCurrencyLinks(currentCurrency);
     document.dispatchEvent(new CustomEvent("currencychange", { detail: { currency: currentCurrency } }));
   }
 
   selectors.forEach(selector => {
     selector.addEventListener("change", event => {
-      const currency = event.target.value;
-      if (!CURRENCY_RATES[currency]) return;
+      const currency = normalizeCurrency(event.target.value);
+      if (!currency) return;
       if (currency === currentCurrency) return;
-      saveSelectedCurrency(currency);
-      window.location.reload();
+      reloadWithCurrency(currency);
     });
   });
 
@@ -154,6 +257,17 @@ function matchesPriceRange(price, range) {
 
 function hasActiveFilters(query, type, priceRange) {
   return Boolean(query) || type !== "all" || priceRange !== "all";
+}
+
+function normalizeSearchText(value) {
+  return String(value || "").toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function matchesSearchText(text, query) {
+  const normalizedQuery = normalizeSearchText(query);
+  if (!normalizedQuery) return true;
+  const normalizedText = normalizeSearchText(text);
+  return normalizedQuery.split(" ").every(token => normalizedText.includes(token));
 }
 
 function setupComparisonTable() {
@@ -194,7 +308,7 @@ function setupComparisonTable() {
       const text = rowSearchText(row);
       const rowType = row.dataset.type;
       const rowRangePrice = readPrice(row);
-      const matchesSearch = text.includes(query);
+      const matchesSearch = matchesSearchText(text, query);
       const matchesType = type === "all" || rowType === type;
       const matchesRange = matchesPriceRange(rowRangePrice, priceRange);
       row.style.display = matchesSearch && matchesType && matchesRange ? "" : "none";
@@ -265,7 +379,7 @@ function setupReviewFilters() {
       const text = card.textContent.toLowerCase();
       const cardType = card.dataset.type;
       const price = readPrice(card);
-      const matchesSearch = text.includes(query);
+      const matchesSearch = matchesSearchText(text, query);
       const matchesType = type === "all" || cardType === type;
       const matchesRange = matchesPriceRange(price, priceRange);
       const isVisible = matchesSearch && matchesType && matchesRange;
