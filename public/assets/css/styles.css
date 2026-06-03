@@ -220,7 +220,8 @@ li { margin: .4rem 0; overflow-wrap: anywhere; }
 .host-banners {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  grid-auto-rows: 1fr;
+  grid-auto-rows: 265px;
+  align-items: stretch;
   gap: 1.1rem;
   margin-top: 1.25rem;
 }
@@ -230,7 +231,7 @@ li { margin: .4rem 0; overflow-wrap: anywhere; }
   flex-direction: column;
   gap: .4rem;
   height: 100%;
-  min-height: 210px;
+  min-height: 0;
   padding: clamp(1.15rem, 2vw, 1.4rem);
   border-radius: 1.25rem;
   text-decoration: none;
@@ -242,6 +243,7 @@ li { margin: .4rem 0; overflow-wrap: anywhere; }
   overflow-wrap: anywhere;
   word-break: break-word;
 }
+.host-banner .host-logo { flex: 0 0 auto; }
 .host-banner:hover { transform: translateY(-4px); border-color: var(--accent-2); }
 .host-banner::before {
   content: "";
@@ -280,6 +282,9 @@ li { margin: .4rem 0; overflow-wrap: anywhere; }
 .banner-scalacube { background: linear-gradient(135deg, #0891b2, #164e63); }
 .banner-hostinger { background: linear-gradient(135deg, #673de6, #2e1065); }
 .banner-nodecraft { background: linear-gradient(135deg, #7c3aed, #3b0764); }
+@media (min-width: 1120px) {
+  .host-banners { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
 .toolbar {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
