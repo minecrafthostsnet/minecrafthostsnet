@@ -220,6 +220,7 @@ li { margin: .4rem 0; overflow-wrap: anywhere; }
 .host-banners {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  grid-auto-rows: 1fr;
   gap: 1.1rem;
   margin-top: 1.25rem;
 }
@@ -228,6 +229,7 @@ li { margin: .4rem 0; overflow-wrap: anywhere; }
   display: flex;
   flex-direction: column;
   gap: .4rem;
+  height: 100%;
   min-height: 210px;
   padding: clamp(1.15rem, 2vw, 1.4rem);
   border-radius: 1.25rem;
