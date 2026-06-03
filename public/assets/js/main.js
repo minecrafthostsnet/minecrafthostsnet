@@ -1,22 +1,143 @@
+const CURRENCY_KEY = "minecraftHostsCurrency";
+const CURRENCY_RATES = {
+  USD: 1,
+  AUD: 1.39248,
+  EUR: 0.858443,
+  GBP: 0.742253,
+  CAD: 1.383724
+};
+const CURRENCY_NAMES = {
+  USD: "USD",
+  AUD: "AUD",
+  EUR: "EUR",
+  GBP: "GBP",
+  CAD: "CAD"
+};
+let currentCurrency = "USD";
 
 const PRICE_RANGES = {
   all: {
-    label: "all price ranges",
     matches: () => true
   },
   low: {
-    label: "under $2/GB",
     matches: price => price < 2
   },
   mid: {
-    label: "$2-$3.99/GB",
     matches: price => price >= 2 && price < 4
   },
   high: {
-    label: "$4+/GB",
     matches: price => price >= 4
   }
 };
+
+function getSelectedCurrency() {
+  try {
+    const saved = window.localStorage.getItem(CURRENCY_KEY);
+    if (saved && CURRENCY_RATES[saved]) return saved;
+  } catch {
+    return "USD";
+  }
+  return "USD";
+}
+
+function saveSelectedCurrency(currency) {
+  try {
+    window.localStorage.setItem(CURRENCY_KEY, currency);
+  } catch {
+    // Local storage can be blocked; the selector still works for this page view.
+  }
+}
+
+function formatCurrency(amountUsd, currency = currentCurrency) {
+  const rate = CURRENCY_RATES[currency] || 1;
+  const convertedAmount = amountUsd * rate;
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(convertedAmount);
+}
+
+function convertUsdText(text, currency = currentCurrency) {
+  if (currency === "USD") return text;
+  return text.replace(/\$(\d+(?:\.\d+)?)/g, (_, amount) => formatCurrency(Number(amount), currency));
+}
+
+function collectCurrencyTextNodes() {
+  const nodes = [];
+  const ignoredParents = "script, style, select, option, noscript";
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.nodeValue.includes("$")) return NodeFilter.FILTER_REJECT;
+      if (node.parentElement?.closest(ignoredParents)) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+
+  while (walker.nextNode()) {
+    nodes.push({
+      node: walker.currentNode,
+      originalText: walker.currentNode.nodeValue
+    });
+  }
+  return nodes;
+}
+
+function priceRangeLabel(range, currency = currentCurrency) {
+  if (range === "low") return `under ${formatCurrency(2, currency)}/GB`;
+  if (range === "mid") return `${formatCurrency(2, currency)}-${formatCurrency(3.99, currency)}/GB`;
+  if (range === "high") return `${formatCurrency(4, currency)}+/GB`;
+  return "all price ranges";
+}
+
+function updatePriceRangeOptions(currency = currentCurrency) {
+  const optionSets = [
+    document.querySelector("#priceRangeFilter"),
+    document.querySelector("#reviewPriceRangeFilter")
+  ].filter(Boolean);
+
+  optionSets.forEach(select => {
+    const labels = {
+      all: "All normalized price ranges",
+      low: `Low: ${priceRangeLabel("low", currency)}`,
+      mid: `Mid: ${priceRangeLabel("mid", currency)}`,
+      high: `High: ${priceRangeLabel("high", currency)}`
+    };
+    Array.from(select.options).forEach(option => {
+      if (labels[option.value]) option.textContent = labels[option.value];
+    });
+  });
+}
+
+function setupCurrencySelector() {
+  const selectors = Array.from(document.querySelectorAll("[data-currency-select]"));
+  const currencyTextNodes = collectCurrencyTextNodes();
+
+  function applyCurrency(currency) {
+    currentCurrency = CURRENCY_RATES[currency] ? currency : "USD";
+    currencyTextNodes.forEach(({ node, originalText }) => {
+      node.nodeValue = convertUsdText(originalText, currentCurrency);
+    });
+    selectors.forEach(selector => {
+      selector.value = currentCurrency;
+      selector.setAttribute("aria-label", `Display prices in ${CURRENCY_NAMES[currentCurrency]}`);
+    });
+    updatePriceRangeOptions(currentCurrency);
+    document.dispatchEvent(new CustomEvent("currencychange", { detail: { currency: currentCurrency } }));
+  }
+
+  selectors.forEach(selector => {
+    selector.addEventListener("change", event => {
+      const currency = event.target.value;
+      if (!CURRENCY_RATES[currency]) return;
+      saveSelectedCurrency(currency);
+      applyCurrency(currency);
+    });
+  });
+
+  applyCurrency(getSelectedCurrency());
+}
 
 function readPrice(element) {
   const rawPrice = element?.dataset?.rangePrice || element?.dataset?.price || "";
@@ -30,10 +151,6 @@ function matchesPriceRange(price, range) {
   return priceRange.matches(price);
 }
 
-function priceRangeLabel(range) {
-  return (PRICE_RANGES[range] || PRICE_RANGES.all).label;
-}
-
 function hasActiveFilters(query, type, priceRange) {
   return Boolean(query) || type !== "all" || priceRange !== "all";
 }
@@ -41,12 +158,6 @@ function hasActiveFilters(query, type, priceRange) {
 function setupComparisonTable() {
   const rows = Array.from(document.querySelectorAll("[data-host-row]"));
   if (!rows.length) return;
-
-  rows.forEach(row => {
-    const rank = row.querySelector(".rank");
-    const rankText = rank?.textContent || "";
-    row.dataset.searchText = row.textContent.replace(rankText, "").toLowerCase();
-  });
 
   const searchInput = document.querySelector("#hostSearch");
   const typeFilter = document.querySelector("#typeFilter");
@@ -66,6 +177,12 @@ function setupComparisonTable() {
     return Number(a.dataset.rank) - Number(b.dataset.rank);
   }
 
+  function rowSearchText(row) {
+    const rank = row.querySelector(".rank");
+    const rankText = rank?.textContent || "";
+    return row.textContent.replace(rankText, "").toLowerCase();
+  }
+
   function updateRows() {
     const query = (searchInput?.value || "").trim().toLowerCase();
     const type = typeFilter?.value || "all";
@@ -73,7 +190,7 @@ function setupComparisonTable() {
     const filtersAreActive = hasActiveFilters(query, type, priceRange);
 
     rows.forEach(row => {
-      const text = row.dataset.searchText || row.textContent.toLowerCase();
+      const text = rowSearchText(row);
       const rowType = row.dataset.type;
       const rowRangePrice = readPrice(row);
       const matchesSearch = text.includes(query);
@@ -109,6 +226,7 @@ function setupComparisonTable() {
   const controls = [searchInput, typeFilter, priceRangeFilter];
   controls.forEach(el => el && el.addEventListener("input", updateRows));
   controls.forEach(el => el && el.addEventListener("change", updateRows));
+  document.addEventListener("currencychange", updateRows);
   resetFilters?.addEventListener("click", () => {
     if (searchInput) searchInput.value = "";
     if (typeFilter) typeFilter.value = "all";
@@ -131,10 +249,6 @@ function setupReviewFilters() {
   const noResults = document.querySelector("#reviewNoResults");
   const grid = document.querySelector("#reviewGrid");
 
-  cards.forEach(card => {
-    card.dataset.searchText = card.textContent.toLowerCase();
-  });
-
   function compareCards(a, b) {
     return Number(a.dataset.rank) - Number(b.dataset.rank);
   }
@@ -147,7 +261,7 @@ function setupReviewFilters() {
     let visibleCount = 0;
 
     cards.sort(compareCards).forEach(card => {
-      const text = card.dataset.searchText || card.textContent.toLowerCase();
+      const text = card.textContent.toLowerCase();
       const cardType = card.dataset.type;
       const price = readPrice(card);
       const matchesSearch = text.includes(query);
@@ -171,6 +285,7 @@ function setupReviewFilters() {
   const controls = [searchInput, typeFilter, priceRangeFilter];
   controls.forEach(el => el && el.addEventListener("input", updateCards));
   controls.forEach(el => el && el.addEventListener("change", updateCards));
+  document.addEventListener("currencychange", updateCards);
   resetFilters?.addEventListener("click", () => {
     if (searchInput) searchInput.value = "";
     if (typeFilter) typeFilter.value = "all";
@@ -181,5 +296,6 @@ function setupReviewFilters() {
   updateCards();
 }
 
+setupCurrencySelector();
 setupComparisonTable();
 setupReviewFilters();
