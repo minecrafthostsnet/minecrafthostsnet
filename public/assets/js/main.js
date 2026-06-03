@@ -1,9 +1,37 @@
 
+const PRICE_RANGES = {
+  all: {
+    label: "all price ranges",
+    matches: () => true
+  },
+  low: {
+    label: "under $2/GB",
+    matches: price => price < 2
+  },
+  mid: {
+    label: "$2-$3.99/GB",
+    matches: price => price >= 2 && price < 4
+  },
+  high: {
+    label: "$4+/GB",
+    matches: price => price >= 4
+  }
+};
+
+function readPrice(element) {
+  const rawPrice = element?.dataset?.rangePrice || element?.dataset?.price || "";
+  const price = Number.parseFloat(rawPrice);
+  return Number.isFinite(price) ? price : null;
+}
+
 function matchesPriceRange(price, range) {
-  if (range === "low") return price < 2;
-  if (range === "mid") return price >= 2 && price < 4;
-  if (range === "high") return price >= 4;
-  return true;
+  const priceRange = PRICE_RANGES[range] || PRICE_RANGES.all;
+  if (range !== "all" && price === null) return false;
+  return priceRange.matches(price);
+}
+
+function priceRangeLabel(range) {
+  return (PRICE_RANGES[range] || PRICE_RANGES.all).label;
 }
 
 function hasActiveFilters(query, type, priceRange) {
@@ -47,7 +75,7 @@ function setupComparisonTable() {
     rows.forEach(row => {
       const text = row.dataset.searchText || row.textContent.toLowerCase();
       const rowType = row.dataset.type;
-      const rowRangePrice = Number(row.dataset.rangePrice || row.dataset.price);
+      const rowRangePrice = readPrice(row);
       const matchesSearch = text.includes(query);
       const matchesType = type === "all" || rowType === type;
       const matchesRange = matchesPriceRange(rowRangePrice, priceRange);
@@ -71,8 +99,9 @@ function setupComparisonTable() {
     }
     if (filterStatus) {
       const context = type === "all" ? "overall editorial ranking" : `${type} category ranking`;
+      const priceContext = priceRange === "all" ? "" : ` Price range: ${priceRangeLabel(priceRange)}.`;
       const activeText = filtersAreActive ? " Active filters applied." : "";
-      filterStatus.textContent = `${visibleCount} of ${rows.length} hosts shown, ranked by ${context}.${activeText}`;
+      filterStatus.textContent = `${visibleCount} of ${rows.length} hosts shown, ranked by ${context}.${priceContext}${activeText}`;
     }
     if (resetFilters) resetFilters.disabled = !filtersAreActive;
   }
@@ -120,7 +149,7 @@ function setupReviewFilters() {
     cards.sort(compareCards).forEach(card => {
       const text = card.dataset.searchText || card.textContent.toLowerCase();
       const cardType = card.dataset.type;
-      const price = Number(card.dataset.price);
+      const price = readPrice(card);
       const matchesSearch = text.includes(query);
       const matchesType = type === "all" || cardType === type;
       const matchesRange = matchesPriceRange(price, priceRange);
@@ -132,8 +161,9 @@ function setupReviewFilters() {
 
     if (noResults) noResults.hidden = visibleCount > 0;
     if (filterStatus) {
+      const priceContext = priceRange === "all" ? "" : ` Price range: ${priceRangeLabel(priceRange)}.`;
       const activeText = filtersAreActive ? " Active review filters applied." : "";
-      filterStatus.textContent = `${visibleCount} of ${cards.length} reviews shown.${activeText}`;
+      filterStatus.textContent = `${visibleCount} of ${cards.length} reviews shown.${priceContext}${activeText}`;
     }
     if (resetFilters) resetFilters.disabled = !filtersAreActive;
   }

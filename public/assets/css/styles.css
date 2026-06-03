@@ -224,17 +224,21 @@ li { margin: .35rem 0; }
 .toolbar {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-  gap: .75rem;
+  gap: .85rem;
   align-items: end;
   margin: 1.25rem 0 .75rem;
-  padding: 1rem;
+  padding: clamp(1rem, 2vw, 1.2rem);
   border: 1px solid var(--border);
-  border-radius: 1.1rem;
-  background: rgba(255,255,255,.035);
+  border-radius: 1.25rem;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.025)),
+    var(--panel);
+  box-shadow: 0 16px 38px rgba(0,0,0,.22);
 }
 .toolbar label {
   display: grid;
   gap: .35rem;
+  min-width: 0;
 }
 .toolbar label span {
   color: var(--muted);
@@ -244,14 +248,59 @@ li { margin: .35rem 0; }
   text-transform: uppercase;
 }
 .toolbar input, .toolbar select {
-  background: var(--panel);
+  appearance: none;
+  background: rgba(8,16,10,.68);
   color: var(--text);
   border: 1px solid var(--border);
-  border-radius: .8rem;
-  padding: .8rem;
-  min-height: 48px;
+  border-radius: .9rem;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+  padding: .85rem .95rem;
+  min-height: 52px;
   min-width: 0;
   width: 100%;
+  transition: border-color .16s ease, background .16s ease, box-shadow .16s ease;
+}
+.toolbar select {
+  padding-right: 2.5rem;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--accent-2) 50%),
+    linear-gradient(135deg, var(--accent-2) 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.15rem) calc(50% - .16rem),
+    calc(100% - .85rem) calc(50% - .16rem);
+  background-size: .32rem .32rem, .32rem .32rem;
+  background-repeat: no-repeat;
+}
+.toolbar input:hover,
+.toolbar select:hover {
+  border-color: rgba(195,243,108,.58);
+  background-color: rgba(8,16,10,.86);
+}
+.toolbar input:focus,
+.toolbar select:focus {
+  border-color: var(--accent-2);
+  box-shadow: 0 0 0 3px rgba(195,243,108,.16), inset 0 1px 0 rgba(255,255,255,.06);
+}
+.toolbar .button {
+  width: 100%;
+  min-height: 52px;
+  border-radius: .9rem;
+  padding: .85rem .95rem;
+}
+.toolbar .button.secondary {
+  background: rgba(117,214,111,.10);
+  border-color: rgba(117,214,111,.35);
+  color: var(--accent-2);
+}
+.toolbar .button.secondary:hover:not(:disabled) {
+  background: rgba(117,214,111,.18);
+  border-color: var(--accent-2);
+}
+.toolbar .button:disabled {
+  background: rgba(255,255,255,.035);
+  border-color: var(--border);
+  color: var(--muted);
+  opacity: .7;
 }
 .table-scroll {
   width: 100%;
