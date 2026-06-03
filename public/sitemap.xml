@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://minecrafthosts.net/</loc><lastmod>2026-06-03</lastmod><priority>1.0</priority></url>
-  <url><loc>https://minecrafthosts.net/reviews/pebblehost.html</loc><lastmod>2026-06-02</lastmod><priority>0.8</priority></url>
-  <url><loc>https://minecrafthosts.net/reviews/scalacube.html</loc><lastmod>2026-06-02</lastmod><priority>0.8</priority></url>
-  <url><loc>https://minecrafthosts.net/reviews/bisecthosting.html</loc><lastmod>2026-06-02</lastmod><priority>0.8</priority></url>
-  <url><loc>https://minecrafthosts.net/reviews/shockbyte.html</loc><lastmod>2026-06-02</lastmod><priority>0.8</priority></url>
-  <url><loc>https://minecrafthosts.net/reviews/hostinger.html</loc><lastmod>2026-06-02</lastmod><priority>0.8</priority></url>
-  <url><loc>https://minecrafthosts.net/reviews/apex-hosting.html</loc><lastmod>2026-06-02</lastmod><priority>0.8</priority></url>
-  <url><loc>https://minecrafthosts.net/reviews/nodecraft.html</loc><lastmod>2026-06-02</lastmod><priority>0.8</priority></url>
-  <url><loc>https://minecrafthosts.net/compare/apex-vs-shockbyte.html</loc><lastmod>2026-06-02</lastmod><priority>0.8</priority></url>
-  <url><loc>https://minecrafthosts.net/compare/pebblehost-vs-bisecthosting.html</loc><lastmod>2026-06-02</lastmod><priority>0.8</priority></url>
-  <url><loc>https://minecrafthosts.net/guides/best-minecraft-hosting-for-modpacks.html</loc><lastmod>2026-06-02</lastmod><priority>0.8</priority></url>
-  <url><loc>https://minecrafthosts.net/guides/best-minecraft-hosting-australia.html</loc><lastmod>2026-06-02</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/reviews/</loc><lastmod>2026-06-03</lastmod><priority>0.9</priority></url>
+  <url><loc>https://minecrafthosts.net/reviews/pebblehost.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/reviews/sparked-host.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/reviews/bisecthosting.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/reviews/shockbyte.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/reviews/witherhosting.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/reviews/scalacube.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/reviews/ggservers.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/reviews/gtxgaming.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/reviews/akliz.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/reviews/ultraservers.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/reviews/nodecraft.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/reviews/apex-hosting.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/reviews/hostinger.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/reviews/dedicatedmc.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/reviews/ghostcap.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/reviews/serverpro.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/compare/apex-vs-shockbyte.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/compare/pebblehost-vs-bisecthosting.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/guides/best-minecraft-hosting-for-modpacks.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
+  <url><loc>https://minecrafthosts.net/guides/best-minecraft-hosting-australia.html</loc><lastmod>2026-06-03</lastmod><priority>0.8</priority></url>
 </urlset>

@@ -269,6 +269,55 @@ tr:last-child td { border-bottom: none; }
   align-items: center;
 }
 .review-hero .host-logo { width: 90px; height: 90px; margin: 0; }
+.star-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  margin: .3rem 0 1rem;
+  padding: .45rem .7rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+}
+.stars {
+  --rating: 0%;
+  position: relative;
+  display: inline-block;
+  color: rgba(255,255,255,.22);
+  letter-spacing: .08em;
+  line-height: 1;
+}
+.stars::before {
+  content: "★★★★★";
+  position: absolute;
+  inset: 0;
+  width: var(--rating);
+  overflow: hidden;
+  color: var(--accent-2);
+}
+.star-rating strong { color: var(--text); }
+.review-grid .card { display: flex; flex-direction: column; }
+.review-card .button { margin-top: auto; text-align: center; }
+.review-card .host-logo { margin-bottom: .4rem; }
+.review-embed {
+  border: 1px solid var(--border);
+  border-radius: 1.1rem;
+  overflow: hidden;
+  background: #fff;
+  min-height: 520px;
+}
+.review-embed iframe {
+  display: block;
+  width: 100%;
+  min-height: 520px;
+  border: 0;
+  background: #fff;
+}
+.review-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
 footer {
   padding: 2rem 1.25rem;
   border-top: 1px solid var(--border);

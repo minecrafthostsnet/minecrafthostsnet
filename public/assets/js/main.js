@@ -4,7 +4,6 @@ const searchInput = document.querySelector("#hostSearch");
 const typeFilter = document.querySelector("#typeFilter");
 const priceUnitFilter = document.querySelector("#priceUnitFilter");
 const priceRangeFilter = document.querySelector("#priceRangeFilter");
-const sortSelect = document.querySelector("#sortHosts");
 const filterStatus = document.querySelector("#filterStatus");
 const resetFilters = document.querySelector("#resetFilters");
 const noResultsRow = document.querySelector("#noResultsRow");
@@ -27,20 +26,14 @@ function rankFor(row, type) {
   return Number(row.dataset.rank);
 }
 
-function priceForSort(row) {
-  return Number(row.dataset.rangePrice || row.dataset.price);
+function compareRows(a, b, type) {
+  const rankDifference = rankFor(a, type) - rankFor(b, type);
+  if (rankDifference) return rankDifference;
+  return Number(a.dataset.rank) - Number(b.dataset.rank);
 }
 
-function compareRows(a, b, type, sort) {
-  if (sort === "price") {
-    const priceDifference = priceForSort(a) - priceForSort(b);
-    if (priceDifference) return priceDifference;
-  }
-  return rankFor(a, type) - rankFor(b, type);
-}
-
-function hasActiveFilters(query, type, priceUnit, priceRange, sort) {
-  return Boolean(query) || type !== "all" || priceUnit !== "all" || priceRange !== "all" || sort !== "rank";
+function hasActiveFilters(query, type, priceUnit, priceRange) {
+  return Boolean(query) || type !== "all" || priceUnit !== "all" || priceRange !== "all";
 }
 
 function updateRows() {
@@ -49,8 +42,7 @@ function updateRows() {
   const type = typeFilter?.value || "all";
   const priceUnit = priceUnitFilter?.value || "all";
   const priceRange = priceRangeFilter?.value || "all";
-  const sort = sortSelect?.value || "rank";
-  const filtersAreActive = hasActiveFilters(query, type, priceUnit, priceRange, sort);
+  const filtersAreActive = hasActiveFilters(query, type, priceUnit, priceRange);
 
   rows.forEach(row => {
     const text = row.dataset.searchText || row.textContent.toLowerCase();
@@ -66,7 +58,7 @@ function updateRows() {
 
   const tbody = rows[0]?.parentElement;
   let visibleCount = 0;
-  const sortedRows = [...rows].sort((a, b) => compareRows(a, b, type, sort));
+  const sortedRows = [...rows].sort((a, b) => compareRows(a, b, type));
   sortedRows.forEach(row => {
     if (row.style.display !== "none") {
       visibleCount += 1;
@@ -81,13 +73,12 @@ function updateRows() {
   }
   if (filterStatus) {
     const context = type === "all" ? "overall editorial ranking" : `${type} category ranking`;
-    const sortContext = sort === "price" ? "sorted by standard monthly amount" : `ranked by ${context}`;
     const activeText = filtersAreActive ? " Active filters applied." : "";
-    filterStatus.textContent = `${visibleCount} of ${rows.length} hosts shown, ${sortContext}.${activeText}`;
+    filterStatus.textContent = `${visibleCount} of ${rows.length} hosts shown, ranked by ${context}.${activeText}`;
   }
   if (resetFilters) resetFilters.disabled = !filtersAreActive;
 }
-const controls = [searchInput, typeFilter, priceUnitFilter, priceRangeFilter, sortSelect];
+const controls = [searchInput, typeFilter, priceUnitFilter, priceRangeFilter];
 controls.forEach(el => el && el.addEventListener("input", updateRows));
 controls.forEach(el => el && el.addEventListener("change", updateRows));
 resetFilters?.addEventListener("click", () => {
@@ -95,7 +86,6 @@ resetFilters?.addEventListener("click", () => {
   if (typeFilter) typeFilter.value = "all";
   if (priceUnitFilter) priceUnitFilter.value = "all";
   if (priceRangeFilter) priceRangeFilter.value = "all";
-  if (sortSelect) sortSelect.value = "rank";
   updateRows();
   searchInput?.focus();
 });
