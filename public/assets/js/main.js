@@ -131,8 +131,9 @@ function setupCurrencySelector() {
     selector.addEventListener("change", event => {
       const currency = event.target.value;
       if (!CURRENCY_RATES[currency]) return;
+      if (currency === currentCurrency) return;
       saveSelectedCurrency(currency);
-      applyCurrency(currency);
+      window.location.reload();
     });
   });
 
