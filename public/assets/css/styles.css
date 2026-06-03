@@ -79,6 +79,25 @@ select:focus-visible {
 }
 .nav-links a { text-decoration: none; color: var(--muted); font-weight: 700; font-size: .95rem; line-height: 1.35; }
 .nav-links a:hover { color: var(--accent-2); }
+.breadcrumbs {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: .75rem 1.25rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .45rem;
+  color: var(--muted);
+  font-size: .92rem;
+  line-height: 1.45;
+}
+.breadcrumbs a {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 800;
+}
+.breadcrumbs a:hover { color: var(--accent-2); }
+.breadcrumbs span:last-child { color: var(--text); }
 header.hero {
   padding: 4rem 1.25rem 3rem;
   text-align: center;
@@ -171,6 +190,8 @@ h3 { line-height: 1.24; overflow-wrap: anywhere; }
   word-break: break-word;
 }
 .card h3 { margin: 0 0 .25rem; font-size: 1.35rem; }
+.faq-grid .card h3 { margin-bottom: .45rem; }
+.faq-grid .card p { margin: 0; color: var(--muted); line-height: 1.72; }
 .price {
   font-size: clamp(1.35rem, 2.7vw, 1.9rem);
   line-height: 1.22;
