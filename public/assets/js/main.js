@@ -2,7 +2,6 @@
 const rows = Array.from(document.querySelectorAll("[data-host-row]"));
 const searchInput = document.querySelector("#hostSearch");
 const typeFilter = document.querySelector("#typeFilter");
-const priceUnitFilter = document.querySelector("#priceUnitFilter");
 const priceRangeFilter = document.querySelector("#priceRangeFilter");
 const filterStatus = document.querySelector("#filterStatus");
 const resetFilters = document.querySelector("#resetFilters");
@@ -15,9 +14,9 @@ rows.forEach(row => {
 });
 
 function matchesPriceRange(price, range) {
-  if (range === "low") return price < 4;
-  if (range === "mid") return price >= 4 && price < 7;
-  if (range === "high") return price >= 7;
+  if (range === "low") return price < 2;
+  if (range === "mid") return price >= 2 && price < 4;
+  if (range === "high") return price >= 4;
   return true;
 }
 
@@ -32,28 +31,25 @@ function compareRows(a, b, type) {
   return Number(a.dataset.rank) - Number(b.dataset.rank);
 }
 
-function hasActiveFilters(query, type, priceUnit, priceRange) {
-  return Boolean(query) || type !== "all" || priceUnit !== "all" || priceRange !== "all";
+function hasActiveFilters(query, type, priceRange) {
+  return Boolean(query) || type !== "all" || priceRange !== "all";
 }
 
 function updateRows() {
   if (!rows.length) return;
   const query = (searchInput?.value || "").trim().toLowerCase();
   const type = typeFilter?.value || "all";
-  const priceUnit = priceUnitFilter?.value || "all";
   const priceRange = priceRangeFilter?.value || "all";
-  const filtersAreActive = hasActiveFilters(query, type, priceUnit, priceRange);
+  const filtersAreActive = hasActiveFilters(query, type, priceRange);
 
   rows.forEach(row => {
     const text = row.dataset.searchText || row.textContent.toLowerCase();
     const rowType = row.dataset.type;
     const rowRangePrice = Number(row.dataset.rangePrice || row.dataset.price);
-    const rowPriceUnit = row.dataset.priceUnit;
     const matchesSearch = text.includes(query);
     const matchesType = type === "all" || rowType === type;
-    const matchesPriceUnit = priceUnit === "all" || rowPriceUnit === priceUnit;
     const matchesRange = matchesPriceRange(rowRangePrice, priceRange);
-    row.style.display = matchesSearch && matchesType && matchesPriceUnit && matchesRange ? "" : "none";
+    row.style.display = matchesSearch && matchesType && matchesRange ? "" : "none";
   });
 
   const tbody = rows[0]?.parentElement;
@@ -78,13 +74,12 @@ function updateRows() {
   }
   if (resetFilters) resetFilters.disabled = !filtersAreActive;
 }
-const controls = [searchInput, typeFilter, priceUnitFilter, priceRangeFilter];
+const controls = [searchInput, typeFilter, priceRangeFilter];
 controls.forEach(el => el && el.addEventListener("input", updateRows));
 controls.forEach(el => el && el.addEventListener("change", updateRows));
 resetFilters?.addEventListener("click", () => {
   if (searchInput) searchInput.value = "";
   if (typeFilter) typeFilter.value = "all";
-  if (priceUnitFilter) priceUnitFilter.value = "all";
   if (priceRangeFilter) priceRangeFilter.value = "all";
   updateRows();
   searchInput?.focus();
